@@ -22,17 +22,17 @@ public class Main {
         String third;
         if (dealList[1].matches(regex)) {
             second = Integer.parseInt(dealList[1]);
-            third = deal.substring(first.length() + secondS.length(), deal.length());}
-        else {third = deal.substring(first.length(), deal.length());}
+            third = deal.substring(first.length() + secondS.length(), deal.length());
+        } else {
+            third = deal.substring(first.length(), deal.length());
+        }
 
         if (first.equals("ADD") & second == 0) {
             todoList.add(third);
 
         } else if (first.equals("ADD") & second != 0) {
             todoList.add(second, third);
-        }
-
-            else if (first.equals("EDIT")) {
+        } else if (first.equals("EDIT")) {
 //            System.out.println("Дело " + "\"" + todoList.getTodos().get(second).strip() + "\"" + "заменено на" + "\"" + third.strip() + "\"");
             todoList.edit(third, second);
 
