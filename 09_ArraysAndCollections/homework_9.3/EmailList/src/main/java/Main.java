@@ -20,19 +20,19 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
             String input = scanner.nextLine();
             if (input.equals("0")) {
-                break;}
-            else if(input.equals("LIST"))
-            {mail.getSortedEmails();}
-            else {
+                break;
+            } else if (input.equals("LIST")) {
+                mail.getSortedEmails();
+            } else {
                 String[] inputList = input.split(" ");
                 mail.add(inputList[1]);
-                }
             }
-            //TODO: write code here
-            
         }
+        //TODO: write code here
+
     }
+}
