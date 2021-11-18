@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class EmailList {
 
-    List<String> myEmailList = new ArrayList<>();
+    TreeSet<String> myEmaillist = new TreeSet<String>();
 
     public void add(String email) {
         String regex = "^(.+)@(.+)\\.(.+)$";
         if (email.matches(regex)) {
-            myEmailList.add(email.toLowerCase());
+            myEmaillist.add(email.toLowerCase());
         } else {
             System.out.println(Main.WRONG_EMAIL_ANSWER);
         }
@@ -19,9 +19,8 @@ public class EmailList {
 
     public List<String> getSortedEmails() {
         // TODO: возвращается список электронных адресов в алфавитном порядке
-        TreeSet myEmailSet = new TreeSet(myEmailList);
-        List newEmailList = new ArrayList(myEmailSet);
-        return newEmailList;
+        return new ArrayList(myEmaillist);
     }
 
 }
+
