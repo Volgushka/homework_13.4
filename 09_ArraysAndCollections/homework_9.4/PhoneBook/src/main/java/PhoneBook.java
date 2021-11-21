@@ -1,25 +1,32 @@
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 public class PhoneBook {
 
     Map<String, String> myPhoneBook = new TreeMap<>();
 
-    public void addContact(String phone, String name) {
-        String regexPhone = "[0-9]{11}";
+    public boolean nameControl(String name) {
         String regexName = "[А-ЯA-Z]{1}[а-яa-z]+";
+        return name.matches(regexName);
+    }
 
-        if (phone.matches(regexPhone) && name.matches(regexName)) {
+    public boolean phoneControl(String phone) {
+        String regexPhone = "[0-9]{11}";
+        return phone.matches(regexPhone);
+    }
+
+    public void addContact(String phone, String name) {/* в качестве ключа в данном случае может быть только номер
+      потому что только номер имеет уникальность в паре  номер - имя
+      у имени может быть несколько номеров
+       но вообще лучше ключом выбирать имя. Только тогда значения
+        олжны быть списком(массивом)*/
+        if (phoneControl(phone) && nameControl(name)) {
             myPhoneBook.put(phone, name);
         } else {
             System.out.println("Неверный формат ввода");
         }
     }
-}
-        // проверьте корректность формата имени и телефона (отдельные методы для проверки)
-        // если такой номер уже есть в списке, то перезаписать имя абонента
+    // проверьте корректность формата имени и телефона (отдельные методы для проверки)
+    // если такой номер уже есть в списке, то перезаписать имя абонента
 
     public String getContactByPhone(String phone) {
         if (myPhoneBook.containsKey(phone)) {
@@ -29,50 +36,60 @@ public class PhoneBook {
         }
     }
 
-        // если контакт не найдены - вернуть пустую строку
-
     public Set<String> getContactByName(String name) {
 
-        Set<String> setPhoneBook = new TreeSet<>();
-        String namePlusTel = "";
-        if (myPhoneBook.containsValue(name)) {
-            namePlusTel = namePlusTel.concat(name) + " - ";
-            for (String tel : myPhoneBook.keySet()) {
-                if (myPhoneBook.get(tel).equals(name)) {
-                    namePlusTel = namePlusTel.concat(tel) + ", ";
-                }
+        Set<String> getPhoneByName = new TreeSet<>();
+
+        for (Map.Entry<String, String> entry : myPhoneBook.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (value.equals(name)) {
+                getPhoneByName.add(value + " - " + key);
             }
-            setPhoneBook.add(namePlusTel.substring(0, namePlusTel.length() - 2));
-            return setPhoneBook;
-        } else {
-            return new TreeSet<>();
         }
+        return getPhoneByName;
     }
 
-// формат одного контакта "Имя - Телефон"
-        // если контакт не найден - вернуть пустой TreeSet
 
+    public Map<String, ArrayList<String>> getVersaKeyName() {
+
+        Map<String, ArrayList<String>> myNewPhoneBook = new TreeMap<>();
+
+        for (Map.Entry some : myPhoneBook.entrySet())
+        {
+            String name = (String) some.getValue();
+            if (!myNewPhoneBook.containsKey(name))
+            {
+                myNewPhoneBook.put(name, new ArrayList<String>());
+                myNewPhoneBook.get(name).add((String) some.getKey());
+            }
+            else
+            {
+                myNewPhoneBook.get(name).add((String) some.getKey());
+            }
+        }
+        return myNewPhoneBook;
+    }
 
     public Set<String> getAllContacts() {
 
-        Set<String> setPhoneBook = new TreeSet<>();
+        Set<String> getPhoneBookAllContacts = new TreeSet<>();
 
-        for (String key : myPhoneBook.keySet()) {
-            setPhoneBook.add(myPhoneBook.get(key) + " - " + key);
+        for (String key : getVersaKeyName().keySet()) {
+            getPhoneBookAllContacts.add(key + " - " + getVersaKeyName().get(key).toString().replaceAll("[\\[\\]]",""));
         }
-        return setPhoneBook;
+        return getPhoneBookAllContacts;
     }
 }
-        // формат одного контакта "Имя - Телефон"
-        // если контактов нет в телефонной книге - вернуть пустой TreeSet
 
+// формат одного контакта "Имя - Телефон"
+// если контактов нет в телефонной книге - вернуть пустой TreeSet
 
-    // для обхода Map используйте получение пары ключ->значение Map.Entry<String,String>
-    // это поможет вам найти все ключи (key) по значению (value)
+// для обхода Map используйте получение пары ключ->значение Map.Entry<String,String>
+// это поможет вам найти все ключи (key) по значению (value)
     /*
         for (Map.Entry<String, String> entry : map.entrySet()){
             String key = entry.getKey(); // получения ключа
             String value = entry.getValue(); // получения ключа
         }
     */
-}
