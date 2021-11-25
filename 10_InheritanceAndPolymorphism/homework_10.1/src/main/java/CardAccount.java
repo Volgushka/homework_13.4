@@ -1,4 +1,8 @@
 public class CardAccount extends BankAccount {
-    // не забывайте, обращаться к методам и конструкторам родителя
-    // необходимо используя super, например, super.put(10D);
+
+    public void take(double amountToTake) {
+        double com =  amountToTake * 0.01;
+        myAmount = ((amountToTake + com)< myAmount) ? myAmount - amountToTake -com: myAmount;
+    }
+
 }
