@@ -1,28 +1,35 @@
 public class BankAccount {
 
-  public double myAmount;
-  public boolean checkSend = true;
+  protected boolean transfer = true;
+  protected double balance;
 
-  public double getAmount()
-  {return myAmount;}
+  public BankAccount() {
+  }
+  public BankAccount(double balance) {
+    this.balance = balance;
+  }
 
+  public double getAmount() {
+    return balance;
+  }
   public void put(double amountToPut) {
-    myAmount = (amountToPut > 0) ? myAmount + amountToPut: myAmount;
+    balance = (amountToPut > 0) ? balance + amountToPut : balance;
   }
 
   public void take(double amountToTake) {
-    if(amountToTake < myAmount){
-      myAmount = myAmount - amountToTake;
-    }
-    else {
-      checkSend = false;
+    if (amountToTake < balance) {
+      balance = balance - amountToTake;
+    } else {
+      transfer = false;
     }
   }
 
-//  public boolean send (BankAccount receiver, double amount)
- // {
-//
-//    return checkSend;
-//
-//  }
-}
+  public boolean send(BankAccount receiver, double amount) {
+    double startAmount = receiver.getAmount();
+    if (amount > 0 && startAmount >= 0) {
+      take(amount);
+      receiver.put(amount);
+    }
+    return receiver.getAmount() == (startAmount + amount);
+  }
+  }
