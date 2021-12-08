@@ -91,12 +91,12 @@ public class Employee implements Comparable <Employee> {
 
   @Override
   public int compareTo(Employee o) {
-    int iSalComaprison = Integer.compare(this.salary, o.salary);
-    if (iSalComaprison == 0)
+    int Compare = Integer.compare(this.salary, o.salary);
+    if (Compare == 0)
     {
-      return name.compareTo(o.name);
+      return this.name.compareTo(o.name);
     }
-    return iSalComaprison;
+    return Compare;
 
   }
 
