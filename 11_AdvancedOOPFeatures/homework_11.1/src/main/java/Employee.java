@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Comparable <Employee> {
 
   private String name;
   private Integer salary;
@@ -89,4 +89,16 @@ public class Employee {
     return Objects.hash(name, salary, workStart);
   }
 
+  @Override
+  public int compareTo(Employee o) {
+    int iSalComaprison = Integer.compare(this.salary, o.salary);
+    if (iSalComaprison == 0)
+    {
+      return name.compareTo(o.name);
+    }
+    return iSalComaprison;
+
+  }
+
 }
+

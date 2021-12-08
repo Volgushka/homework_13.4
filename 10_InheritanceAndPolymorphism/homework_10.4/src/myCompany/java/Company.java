@@ -1,20 +1,31 @@
 package myCompany.java;
 
+import myCompany.java.emp.Manager;
+import myCompany.java.emp.Operator;
+import myCompany.java.emp.TopManager;
+
 import java.util.*;
 
 public class Company {
     public static String reportingPeriod;
-    TreeMap<String, Double> incomeOfCompany = new TreeMap<>();
+    Map<String, Double> incomeOfCompany = new TreeMap<>();
+    Map<String, String> employeesList = new HashMap<>();
+
     ArrayList<String> hireList = new ArrayList<>();
     ArrayList<Double> salaryList = new ArrayList<>();
-    HashMap<String, String> employeesList = new HashMap<>();
 
+    public Company(Map<String, String> employeesList) {
+        this.employeesList = employeesList;
+    }
+
+    public Company() {
+        this.employeesList = employeesList;
+    }
 
     public static String getReportingPeriod() {
         return reportingPeriod;
     }
 
-    enum positionList {Manager, TopManager, Operator}
 
     public double getIncome(String reportingPeriod) {
         return incomeOfCompany.getOrDefault(reportingPeriod, 0.0);
@@ -35,10 +46,10 @@ public class Company {
     }
 
     public void createSalaryList(String reportingPeriod) {
-        Manager manager = new Manager();
-        TopManager topManager = new TopManager();
-        Operator operator = new Operator();
         for (Map.Entry<String, String> some : employeesList.entrySet()) {
+            Manager manager = new Manager();
+            TopManager topManager = new TopManager();
+            Operator operator = new Operator();
             String position = some.getValue();
             switch (position) {
                 case "Manager" -> {

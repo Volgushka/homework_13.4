@@ -1,5 +1,7 @@
 package myCompany.java;
 
+import myCompany.java.emp.TopManager;
+
 import java.util.*;
 
 public class Main {
@@ -10,6 +12,7 @@ public class Main {
 
         Company.reportingPeriod = "may2020";
         company.incomeOfCompany.put("may2020", 15000000.0);
+        double monthIncome = company.getIncome("may2020");
 
         company.hire("Анна", "TopManager");
         company.hire("Алик", "TopManager");
@@ -54,11 +57,11 @@ public class Main {
         company.fire("Ада");
         company.fire("Алексей");
 
-
+        System.out.println(company.getIncome("may2020"));
     }
 }
 
-//    Создайте и наймите в компанию: 180 операторов Operator, 80 менеджеров по продажам Manager, 10 топ-менеджеров TopManager.
+//    Создайте и наймите в компанию: 180m операторов Operator, 80 менеджеров по продажам Manager, 10 топ-менеджеров TopManager.
 //    Распечатайте список из 10–15 самых высоких зарплат в компании.
 //    Распечатайте список из 30 самых низких зарплат в компании.
 //            Увольте 50% сотрудников.
