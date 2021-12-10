@@ -1,7 +1,7 @@
 package myCompany.java.emp;
 import myCompany.java.Company;
 
-public class TopManager implements Employee {
+public class TopManager<bonusPersent> implements Employee {
 
    private Company company;
 
@@ -9,7 +9,7 @@ public class TopManager implements Employee {
         this.company = company;
     }
 
-    double income = company != null ? company.getIncom() : 0;
+    double income =  company.getIncom();
     double fixedSalary = 80000.0;
     double bonusPersent = 1.5;
     double minimumProfit = 10000000.0;
