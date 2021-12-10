@@ -3,13 +3,16 @@ import myCompany.java.Company;
 
 public class TopManager implements Employee {
 
-    Company company = new Company();
+   private Company company;
 
+    public TopManager(Company company) {
+        this.company = company;
+    }
+
+    double income = company != null ? company.getIncom() : 0;
     double fixedSalary = 80000.0;
     double bonusPersent = 1.5;
     double minimumProfit = 10000000.0;
-    double monthIncome = company.getIncome("may2020");
-    String reportingPeriod = Company.getReportingPeriod();
 
     @Override
     public double getMonthFixedSalary() {
@@ -17,12 +20,12 @@ public class TopManager implements Employee {
     }
 
     @Override
-    public double getMonthBonus(String reportingPeriod) {
-        return (company.getIncome("may2020") > minimumProfit) ? fixedSalary* bonusPersent : 0;
+    public double getMonthBonus() {
+        return (income > minimumProfit) ? fixedSalary* bonusPersent : 0;
     }
 
     @Override
     public double getMonthSalary() {
-        return fixedSalary + getMonthBonus(reportingPeriod);
+        return fixedSalary + getMonthBonus();
     }
 }

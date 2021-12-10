@@ -8,56 +8,54 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Company company = new Company();
+        Company myCompany = new Company(15000000.0);
+        Company myCompany2 = new Company(18000000.0);
+        Company myCompany3 = new Company(20000000.0);
 
-        Company.reportingPeriod = "may2020";
-        company.incomeOfCompany.put("may2020", 15000000.0);
-        double monthIncome = company.getIncome("may2020");
+        myCompany.hire("Анна", "TopManager");
+        myCompany.hire("Алик", "TopManager");
+        myCompany.hire("Алла", "TopManager");
+        myCompany.hire("Алиса", "TopManager");
+        myCompany.hire("Артем", "TopManager");
+        myCompany.hire("Альберт", "TopManager");
+        myCompany.hire("Аверьян", "TopManager");
+        myCompany.hire("Ася", "TopManager");
+        myCompany.hire("Ада", "TopManager");
+        myCompany.hire("Алексей", "TopManager");
 
-        company.hire("Анна", "TopManager");
-        company.hire("Алик", "TopManager");
-        company.hire("Алла", "TopManager");
-        company.hire("Алиса", "TopManager");
-        company.hire("Артем", "TopManager");
-        company.hire("Альберт", "TopManager");
-        company.hire("Аверьян", "TopManager");
-        company.hire("Ася", "TopManager");
-        company.hire("Ада", "TopManager");
-        company.hire("Алексей", "TopManager");
+        myCompany.hireList.add("Борис");
+        myCompany.hireList.add("Барбара");
+        myCompany.hireList.add("Бонифаций");
+        myCompany.hireList.add("Белла");
+        myCompany.hireList.add("Бронислав");
 
-        company.hireList.add("Борис");
-        company.hireList.add("Барбара");
-        company.hireList.add("Бонифаций");
-        company.hireList.add("Белла");
-        company.hireList.add("Бронислав");
+        myCompany.hireAll("Manager");
+        myCompany.hireList.clear();
 
-        company.hireAll("Manager");
-        company.hireList.clear();
+        myCompany.hireList.add("Василий");
+        myCompany.hireList.add("Варвара");
+        myCompany.hireList.add("Вера");
+        myCompany.hireList.add("Виктор");
+        myCompany.hireList.add("Вячеслав");
+        myCompany.hireAll("Operator");
 
-        company.hireList.add("Василий");
-        company.hireList.add("Варвара");
-        company.hireList.add("Вера");
-        company.hireList.add("Виктор");
-        company.hireList.add("Вячеслав");
-        company.hireAll("Operator");
+        System.out.println(myCompany.employeesList);
 
-        System.out.println(company.employeesList);
+        myCompany.createSalaryList(myCompany);
 
-        company.createSalaryList("may2020");
-
-        for (String lowestSalary : company.getLowestSalaryStaff(10)) {
+        for (String lowestSalary : myCompany.getLowestSalaryStaff(10)) {
             System.out.println(lowestSalary);
         }
 
-        for (String TopSalary : company.getTopSalaryStaff(15)) {
+        for (String TopSalary : myCompany.getTopSalaryStaff(15)) {
             System.out.println(TopSalary);
         }
 
 
-        company.fire("Ада");
-        company.fire("Алексей");
+        myCompany.fire("Ада");
+        myCompany.fire("Алексей");
 
-        System.out.println(company.getIncome("may2020"));
+
     }
 }
 

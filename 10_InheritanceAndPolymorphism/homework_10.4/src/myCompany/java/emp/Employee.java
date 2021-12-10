@@ -4,7 +4,7 @@ public interface Employee {
 
 
     double getMonthFixedSalary();
-    double getMonthBonus(String reportingPeriod);
+    double getMonthBonus();
     double getMonthSalary();
 
 

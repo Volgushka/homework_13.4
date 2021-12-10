@@ -19,7 +19,10 @@ public class Main {
         Date beginOfPeriod = new Date(117,0,01);
         Date endOfPeriod  = new Date(117,11,31);
 
-        Optional <Employee> optional = staff.stream().filter(employee -> employee.getWorkStart().before(endOfPeriod) && employee.getWorkStart().after(beginOfPeriod)).max(Comparator.comparing(Employee::getSalary));
+        Optional <Employee> optional = staff.stream()
+                .filter(employee -> employee.getWorkStart()
+                        .before(endOfPeriod) && employee.getWorkStart()
+                        .after(beginOfPeriod)).max(Comparator.comparing(Employee::getSalary));
 
         return optional.get();
     }

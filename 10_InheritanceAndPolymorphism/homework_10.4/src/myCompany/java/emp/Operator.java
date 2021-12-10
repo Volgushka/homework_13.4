@@ -9,10 +9,13 @@ import myCompany.java.Company;
 
 public class Operator implements Employee {
 
-    double fixedSalary = 45000.0;
-    Company helperObject = new Company();
-    String reportingPeriod = Company.getReportingPeriod();
+    private Company company;
 
+    public Operator(Company company) {
+        this.company = company;
+    }
+
+    double fixedSalary = 45000.0;
 
     @Override
     public double getMonthFixedSalary() {
@@ -20,12 +23,12 @@ public class Operator implements Employee {
     }
 
     @Override
-    public double getMonthBonus(String reportingPeriod) {
+    public double getMonthBonus() {
         return 0;
     }
 
     @Override
     public double getMonthSalary() {
-        return fixedSalary + getMonthBonus(reportingPeriod);
+        return fixedSalary + getMonthBonus();
     }
 }

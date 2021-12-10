@@ -3,9 +3,13 @@ import myCompany.java.Company;
 
 public class Manager implements Employee{
 
-    double fixedSalary = 30000.0;
-    String reportingPeriod = Company.getReportingPeriod();
+    private Company company;
 
+    public Manager(Company company) {
+        this.company = company;
+    }
+
+    double fixedSalary = 30000.0;
 
     @Override
     public double getMonthFixedSalary() {
@@ -13,12 +17,12 @@ public class Manager implements Employee{
     }
 
     @Override
-    public double getMonthBonus(String reportingPeriod) {
+    public double getMonthBonus() {
         return (Math.random()* 25000) + 115000;
     }
 
     @Override
     public double getMonthSalary() {
-        return fixedSalary + getMonthBonus(reportingPeriod);
+        return fixedSalary + getMonthBonus();
     }
 }
