@@ -10,9 +10,11 @@ import myCompany.java.Company;
 public class Operator implements Employee {
 
     private Company company;
+    double income;
 
     public Operator(Company company) {
         this.company = company;
+        income = company.getIncom();
     }
 
     double fixedSalary = 45000.0;

@@ -4,9 +4,11 @@ import myCompany.java.Company;
 public class Manager implements Employee{
 
     private Company company;
+    double income;
 
     public Manager(Company company) {
         this.company = company;
+        this.income = company.getIncom();
     }
 
     double fixedSalary = 30000.0;
