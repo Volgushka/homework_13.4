@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomerStorage {
     private final Map<String, Customer> storage;
@@ -13,12 +15,30 @@ public class CustomerStorage {
         final int INDEX_SURNAME = 1;
         final int INDEX_EMAIL = 2;
         final int INDEX_PHONE = 3;
+        String telRegex = "^\\+7\\d{10}";
+        Pattern telPattern = Pattern.compile(telRegex);
+
+        String mailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern mailPattern = Pattern.compile(mailRegex);
 
         String[] components = data.split("\\s+");
+        if (components.length != 4) {
+            throw new IllegalArgumentException("Неправильный формат. Правильный формат - \n" + "add Василий Петров " +
+                    "vasily.petrov@gmail.com +79215637722");
+        }
         String name = components[INDEX_NAME] + " " + components[INDEX_SURNAME];
         storage.put(name, new Customer(name, components[INDEX_PHONE], components[INDEX_EMAIL]));
+        Matcher telMatcher = telPattern.matcher(components[INDEX_PHONE]);
+        if (!telMatcher.matches()) {
+            throw new IllegalArgumentException("Номер телефона не соответствует формату. Правильный формат - \n" +
+                    "+7XXXXXXXXXX");
+        }
+        Matcher mailMatcher = mailPattern.matcher(components[INDEX_EMAIL]);
+        if (!mailMatcher.matches()) {
+            throw new IllegalArgumentException("E-mail не соответствует формату. Правильный формат - \n" +
+                    "vasily.petrov@gmail.com");
+        }
     }
-
     public void listCustomers() {
         storage.values().forEach(System.out::println);
     }
