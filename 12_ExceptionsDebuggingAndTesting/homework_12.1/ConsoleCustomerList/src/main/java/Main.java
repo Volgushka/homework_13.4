@@ -16,9 +16,14 @@ public class Main {
         while (true) {
 
             try {
-
                 String command = scanner.nextLine();
                 String[] tokens = command.split("\\s+", 2);
+                if (tokens[0].equals("add") & tokens.length < 2 ){
+                    throw new ArrayIndexOutOfBoundsException("Неправильный формат. Правильный формат-" + ADD_COMMAND);
+                }
+                if (tokens[0].equals("remove") & tokens.length < 2 ){
+                    throw new ArrayIndexOutOfBoundsException("Неправильный формат. Правильный формат- remove Василий Петров");
+                }
 
                 if (tokens[0].equals("add")) {
                     executor.addCustomer(tokens[1]);
@@ -34,7 +39,7 @@ public class Main {
                     System.out.println(COMMAND_ERROR);
                 }
             }
-            catch (IllegalArgumentException exception){
+            catch (IllegalArgumentException | ArrayIndexOutOfBoundsException exception) {
                 System.out.println(exception.getMessage());
             }
         }
