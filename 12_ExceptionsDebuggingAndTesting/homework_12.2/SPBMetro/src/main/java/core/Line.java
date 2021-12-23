@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Line implements Comparable<Line>
 {
     private int number;

@@ -125,8 +125,8 @@ public class RouteCalculator {
 
         ArrayList<Station> route = new ArrayList<>();
 
-        List<Station> fromLineStations = from.getLine().getStations();
-        List<Station> toLineStations = to.getLine().getStations();
+        List<Station> fromLineStations = from.getLine().getStations();// все станции одной линии
+        List<Station> toLineStations = to.getLine().getStations();// все станции другой
 
         for (Station srcStation : fromLineStations) {
             for (Station dstStation : toLineStations) {
@@ -135,7 +135,7 @@ public class RouteCalculator {
                 if (connectedLineRoute == null) {
                     continue;
                 }
-                List<Station> way = new ArrayList<>();
+                ArrayList<Station> way = new ArrayList<>();
                 way.addAll(getRouteOnTheLine(from, srcStation));
                 way.addAll(connectedLineRoute);
                 way.addAll(getRouteOnTheLine(dstStation, to));
@@ -145,7 +145,6 @@ public class RouteCalculator {
                 }
             }
         }
-
         return route;
     }
 }
