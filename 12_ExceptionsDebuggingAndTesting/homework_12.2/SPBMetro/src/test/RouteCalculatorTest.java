@@ -4,8 +4,6 @@ import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
 
 public class RouteCalculatorTest extends TestCase {
 

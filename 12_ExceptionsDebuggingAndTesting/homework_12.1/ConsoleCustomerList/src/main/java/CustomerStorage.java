@@ -39,7 +39,7 @@ public class CustomerStorage {
 
         String name = components[INDEX_NAME] + " " + components[INDEX_SURNAME];
         storage.put(name, new Customer(name, components[INDEX_PHONE], components[INDEX_EMAIL]));
-        .
+
     }
     public void listCustomers() {
         storage.values().forEach(System.out::println);
