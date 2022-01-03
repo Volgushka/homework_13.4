@@ -1,47 +1,56 @@
 import java.io.File;
-import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FileUtils {
 
-    public static long calculateFolderSize(String path) {
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
+
+    public static long calculateFolderSize(String path) {
         long count = 0;
 
-        File folder = new File (path);
-        File[] listOfFiles = folder.listFiles();
+        try {
 
-        for (File file : listOfFiles) {
-            if (file.isFile())
-                count += file.length();
-            else
-                count += calculateFolderSize(file.getAbsolutePath());
+            File folder = new File(path);
+            File[] listOfFiles = folder.listFiles();
+
+            for (File file : listOfFiles) {
+                if (file.isFile())
+                    count += file.length();
+                else
+                    count += calculateFolderSize(file.getAbsolutePath());}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Неверный путь либо такой папки не существует: " + path + " " + e);
         }
-        return count;
+       return count;
     }
 
 
+    public static String getFolderSize(String path)
+    {
 
+        double folderSize = calculateFolderSize(path);
 
-    public static String FolderSize(String path) {
-
-       double folderSize = calculateFolderSize(path);
-
-        if (folderSize < 1024) {
+        if (folderSize < 1024)
+        {
             return folderSize + " б";
 
-        } else if (folderSize < 1048576) {
-            String result = String.format("%.1f",folderSize/1024);
+        } else if (folderSize < 1048576)
+        {
+            String result = String.format("%.1f", folderSize / 1024);
             return result + " Кб";
 
-        } else if (folderSize < 1073741824) {
-            String result = String.format("%.1f",folderSize/1048576);
-            return result  + " Мб";
+        } else if (folderSize < 1073741824)
+        {
+            String result = String.format("%.1f", folderSize / 1048576);
+            return result + " Мб";
         }
 
-        String result = String.format("%.1f",folderSize/1073741824);
+        String result = String.format("%.1f", folderSize / 1073741824);
         return result + " Гб";
     }
+
 }
-
-
-
