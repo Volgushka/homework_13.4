@@ -13,13 +13,13 @@ public class TestMovementList {
 
     @Test
     @DisplayName("Сумма прихода")
-    void testSumIncome() {
+    void testSumIncome() throws Exception {
         assertEquals(460_800.0, new Movements(getCsvFilenamePath()).getIncomeSum(), DELTA);
     }
 
     @Test
     @DisplayName("Сумма расходов")
-    void testSumExpense() {
+    void testSumExpense() throws Exception {
         assertEquals(466_393.07, new Movements(getCsvFilenamePath()).getExpenseSum(), DELTA);
     }
 
