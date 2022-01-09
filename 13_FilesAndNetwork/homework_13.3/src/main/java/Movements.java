@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -11,47 +13,60 @@ public class Movements {
 
     public Movements(String pathMovementsCsv) {
     }
-    public ArrayList<Lines> createLines() throws IOException {
+    public List<Lines> createLines() throws IOException {
 
-   //     BufferedReader file = new BufferedReader(new FileReader(String.valueOf(new Movements(Main.csvFile))));
-        BufferedReader file = new BufferedReader(new FileReader("D:\\Java\\java_basics\\13_FilesAndNetwork\\homework_13.3\\src\\test\\resources\\movementList.csv"));
-        ArrayList <Lines>  myMovements = new ArrayList<>();
-        String crudeString;
-        boolean firstline = true;
+        String fileName = "D:\\Java\\java_basics\\13_FilesAndNetwork\\homework_13.3\\src\\test\\resources\\movementList.csv";
 
-        while((crudeString = file.readLine()) != null){
+        ArrayList<Lines> myMovements = new ArrayList<>();
 
-            if (firstline){firstline = false;
+        try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
+            String crudeString;
+            boolean firstline = true;
+
+            while ((crudeString = file.readLine()) != null) {
+
+                if (firstline) {
+                    firstline = false;
+                } else {
+                    String[] parsedString = crudeString.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    parsedString[7] = parsedString[7].replaceAll("\\,", "\\.").replaceAll("\"", "");
+                    Lines line = new Lines(parsedString[0], parsedString[1], parsedString[2], parsedString[3],
+                            parsedString[4], parsedString[5], parsedString[6], parsedString[7],getOrganizations(parsedString[5]));
+                    myMovements.add(line);
+                }
             }
-             else {
-                String [] parsedString = crudeString.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-                parsedString[7] = parsedString[7].replace("\"", "");;
-                Lines line = new Lines(parsedString[0], parsedString[1], parsedString[2], parsedString[3], parsedString[4], parsedString[5], parsedString[6],parsedString[7]);
-                myMovements.add(line);
-            }
+            return myMovements;
         }
-        return myMovements;
     }
-
     public double getExpenseSum() throws NumberFormatException, IOException {
-        double getExpenseSum;
-        Stream<String> streamExpense = createLines().stream().map(Lines::getOut);
-        getExpenseSum = streamExpense.mapToDouble(Double::parseDouble).sum();
-        return getExpenseSum;
+        return createLines().stream()
+                .mapToDouble(v -> Double.parseDouble(v.getOut()))
+                .sum();
     }
 
-    public double getIncomeSum() throws Exception {
-        double getIncomeSum;
-        Stream<String> streamIncom = createLines().stream().map(Lines::getIncome);
-        getIncomeSum = streamIncom.mapToDouble(Double::parseDouble).sum();
-        return getIncomeSum;
+
+    public double getIncomeSum() throws IOException {
+        return createLines().stream()
+                .mapToDouble(v -> Double.parseDouble(v.getIncome()))
+                .sum();
+    }
+    public String getOrganizations(String string){
+        String newString = string.replace('\\','/');
+        int beginIndex = newString.lastIndexOf("/");
+        int endIndex = newString.indexOf("  ",beginIndex);
+        return string.substring(beginIndex+1,endIndex);
     }
 
     public void expensesByOrganizations() throws IOException {
-        Map<String, Double> expensesByOrganizations = createLines().stream().filter(a -> Double.parseDouble(a.getOut()) > 0)
-                .collect(Collectors.toMap(k -> k.getDescription(), v -> v.getOut(), (v1, v2) -> String.valueOf(Double.parseDouble((String) v1) + Double.parseDouble((String) v2));
-        String specifiers = "%-40s %-10s%n";
-        expensesByOrganizations.forEach((k, v) -> System.out.format(specifiers, k, v));
+
+        Map<String,Double> expensesByOrganizations =  createLines().stream().filter(a -> Double.parseDouble(a.getOut()) > 0).
+        collect(Collectors.toMap(Lines::getOrganization, v -> Double.parseDouble(v.getOut()), Double::sum));
+
+        StringBuilder sb = new StringBuilder();
+
+
+        String form = "%-30s %-10s%n";
+        expensesByOrganizations.forEach((k, v) -> System.out.format(form, k, v));
 
     }
 }

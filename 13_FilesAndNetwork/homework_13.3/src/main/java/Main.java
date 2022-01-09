@@ -14,8 +14,9 @@ public class Main {
 
             try {
 
+            System.out.println("Сумма доходов:  " + statement.getIncomeSum() + " руб.");
             System.out.println("Сумма расходов: " + statement.getExpenseSum() + " руб.");
-            System.out.println("Сумма доходов: " + statement.getIncomeSum() + " руб.");
+
 
             System.out.println();
 

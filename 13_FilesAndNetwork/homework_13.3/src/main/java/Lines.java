@@ -8,12 +8,12 @@ public class Lines {
     private String date;
     private String referens;
     private String description;
-
+    private String organization;
     private String income;
     private String out;
 
 
-    public Lines(String type, String number, String date, String currency, String referens, String description, String income, String out) {
+    public Lines(String type, String number, String date, String currency, String referens, String description, String income, String out, String organization) {
         this.type = type;
         this.number = number;
         this.date = date;
@@ -22,6 +22,7 @@ public class Lines {
         this.description = description;
         this.income = income;
         this.out = out;
+        this.organization = organization;
     }
 
     public String getType() {
@@ -54,6 +55,10 @@ public class Lines {
 
     public String getReferens() {
         return referens;
+    }
+
+    public String getOrganization() {
+        return organization;
     }
 }
 
