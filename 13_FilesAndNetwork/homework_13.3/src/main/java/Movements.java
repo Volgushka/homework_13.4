@@ -2,24 +2,23 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Movements {
 
+    String pathMovementsCsv;
+
 
     public Movements(String pathMovementsCsv) {
+        this.pathMovementsCsv = pathMovementsCsv;
     }
     public List<Lines> createLines() throws IOException {
 
-        String fileName = "D:\\Java\\java_basics\\13_FilesAndNetwork\\homework_13.3\\src\\test\\resources\\movementList.csv";
 
         ArrayList<Lines> myMovements = new ArrayList<>();
 
-        try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader file = new BufferedReader(new FileReader(pathMovementsCsv))) {
             String crudeString;
             boolean firstline = true;
 
@@ -29,6 +28,7 @@ public class Movements {
                     firstline = false;
                 } else {
                     String[] parsedString = crudeString.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    parsedString[6] = parsedString[6].replaceAll("\\,", "\\.").replaceAll("\"", "");
                     parsedString[7] = parsedString[7].replaceAll("\\,", "\\.").replaceAll("\"", "");
                     Lines line = new Lines(parsedString[0], parsedString[1], parsedString[2], parsedString[3],
                             parsedString[4], parsedString[5], parsedString[6], parsedString[7],getOrganizations(parsedString[5]));
@@ -57,16 +57,12 @@ public class Movements {
         return string.substring(beginIndex+1,endIndex);
     }
 
-    public void expensesByOrganizations() throws IOException {
+    public Map<String,Double> expensesByOrganizations() throws IOException {
 
-        Map<String,Double> expensesByOrganizations =  createLines().stream().filter(a -> Double.parseDouble(a.getOut()) > 0).
+        return createLines().stream().filter(a -> Double.parseDouble(a.getOut()) > 0).
         collect(Collectors.toMap(Lines::getOrganization, v -> Double.parseDouble(v.getOut()), Double::sum));
 
-        StringBuilder sb = new StringBuilder();
 
-
-        String form = "%-30s %-10s%n";
-        expensesByOrganizations.forEach((k, v) -> System.out.format(form, k, v));
 
     }
 }

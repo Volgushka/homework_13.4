@@ -1,9 +1,3 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
-
 public class Main {
 
     public static final String csvFile = "D:\\Java\\java_basics\\13_FilesAndNetwork\\homework_13.3\\src\\test\\resources\\movementList.csv";
@@ -21,7 +15,9 @@ public class Main {
             System.out.println();
 
             System.out.println("Суммы расходов по организациям: ");
-            statement.expensesByOrganizations();
+
+            String form = "%-30s %-10s%n";
+            statement.expensesByOrganizations().forEach((k, v) -> System.out.format(form, k, v));
         } catch (Exception e){
             e.printStackTrace();
         }
