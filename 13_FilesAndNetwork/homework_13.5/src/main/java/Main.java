@@ -1,4 +1,3 @@
-import com.google.gson.Gson;
 import core.CreateMetroMap;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
