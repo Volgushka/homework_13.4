@@ -24,7 +24,7 @@ public class Main {
     public static void getStationsCount(String filePath) throws ParseException, IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         StringBuilder stringBuilder = new StringBuilder();
-        array.add(object);
+        //array.add(object);
         JSONObject jo = (JSONObject) obj;
 
         String line = (String) jo.get("line");;
